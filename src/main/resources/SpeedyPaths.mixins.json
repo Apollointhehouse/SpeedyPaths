@@ -4,6 +4,7 @@
     "package": "apollointhehouse.SpeedyPaths.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
+        "SpeedyPathsMixin"
     ],
     "client": [
     ],
