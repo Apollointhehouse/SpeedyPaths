@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "id": "examplemod",
+  "id": "speedypaths",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This mod aims to help new BTA modders.",
+  "name": "Speedy Paths",
+  "description": "Makes legs go brrr on path blocks.",
   "authors": [
-    "Turnip Labs"
+    "Apollointhehouse"
   ],
   "contact": {
-    "homepage": "",
-    "sources": ""
+    "homepage": "https://github.com/Apollointhehouse/SpeedyPaths",
+    "sources": "https://github.com/Apollointhehouse/SpeedyPaths"
   },
 
   "license": "CC0-1.0",
@@ -18,11 +18,11 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-        "turniplabs.examplemod.ExampleMod"
+      "apollointhehouse.SpeedyPaths.SpeedyPaths"
     ]
   },
   "mixins": [
-      "examplemod.mixins.json"
+    "SpeedyPaths.mixins.json"
   ],
 
   "depends": {
