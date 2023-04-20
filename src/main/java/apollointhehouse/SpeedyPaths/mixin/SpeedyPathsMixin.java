@@ -9,20 +9,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Block.class)
 public class SpeedyPathsMixin {
 
+    // This method is called when an entity walks on a block
     @Inject(method = "onEntityWalking", at = @At("HEAD"), remap = false)
     public void onEntityWalking(World world, int x, int y, int z, Entity entity, CallbackInfo ci) {
 
-        // Check if the block the entity is walking on is cobblestone
+        // Get the block position and check if it is a path block (either cobblestone or dirt)
         int blockX = MathHelper.floor_double(entity.posX);
         int blockY = MathHelper.floor_double(entity.posY - 0.20000000298023224D - (double)entity.yOffset);
         int blockZ = MathHelper.floor_double(entity.posZ);
-        boolean isCobblestone = world.getBlockId(blockX, blockY, blockZ) == Block.cobbleStone.blockID;
+        boolean isPathBlock = world.getBlockId(blockX, blockY, blockZ) == Block.cobbleStone.blockID ||
+                world.getBlockId(blockX, blockY, blockZ) == Block.pathDirt.blockID;
 
         // Check if the entity is moving
         boolean isMoving = entity.motionX != 0 && entity.motionZ != 0;
 
-        // Apply speed boost if the entity is on cobblestone and moving
-        if (isCobblestone && isMoving) {
+        // Apply speed boost if the entity is on a path block and moving
+        if (isPathBlock && isMoving) {
 
             // Calculate the new speed and limit it to 1 block per tick
             double newSpeedX = entity.motionX * 3.0; // Triple the entity's speed
