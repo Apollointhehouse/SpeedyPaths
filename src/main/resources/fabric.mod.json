@@ -18,7 +18,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "apollointhehouse.SpeedyPaths.SpeedyPaths"
+      {
+        "adapter": "kotlin",
+        "value": "apollointhehouse.speedyPaths.SpeedyPaths"
+      }
     ]
   },
   "mixins": [
@@ -26,7 +29,8 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.13.3"
+    "fabricloader": ">=0.13.3",
+    "fabric-language-kotlin": ">=1.9.4+kotlin.1.8.21"
   },
   "suggests": {
   }

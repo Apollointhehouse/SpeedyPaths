@@ -1,6 +1,7 @@
 plugins {
 	id 'babric-loom' version '0.12-SNAPSHOT'
 	id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.21'
 }
 
 group = project.mod_group
@@ -50,6 +51,10 @@ repositories {
 }
 
 dependencies {
+	modImplementation("net.fabricmc:fabric-language-kotlin:1.9.4+kotlin.1.8.21") {
+		exclude(group: "net.fabricmc", module: "fabric-loader")
+	}
+
 	minecraft "bta-download-repo:bta:${project.bta_version}"
 	mappings loom.layered() {}
 
@@ -61,6 +66,7 @@ dependencies {
 
 	modImplementation "org.slf4j:slf4j-api:1.8.0-beta4"
 	modImplementation "org.apache.logging.log4j:log4j-slf4j18-impl:2.16.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
 }
 
@@ -86,4 +92,14 @@ processResources {
 	filesMatching("fabric.mod.json") {
 		expand "version": version
 	}
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }

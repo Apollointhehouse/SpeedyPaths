@@ -1,14 +1,14 @@
 {
-    "required": true,
-    "minVersion": "0.8",
-    "package": "apollointhehouse.SpeedyPaths.mixin",
-    "compatibilityLevel": "JAVA_8",
-    "mixins": [
-        "SpeedyPathsMixin"
-    ],
-    "client": [
-    ],
-    "injectors": {
-        "defaultRequire": 1
+  "required": true,
+  "minVersion": "0.8",
+  "package": "apollointhehouse.speedyPaths.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "EntityLivingMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
   }
 }
