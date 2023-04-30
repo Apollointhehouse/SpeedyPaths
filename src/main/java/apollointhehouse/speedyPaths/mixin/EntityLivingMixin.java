@@ -6,13 +6,11 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import net.minecraft.src.MovementInput;
 
 import static java.lang.Math.sqrt;
 
 @Mixin(EntityLiving.class)
 public abstract class EntityLivingMixin extends Entity {
-
     @Shadow protected float moveForward;
     @Shadow protected float moveStrafing;
 
@@ -21,6 +19,7 @@ public abstract class EntityLivingMixin extends Entity {
     }
 
     @Inject(method = "onUpdate", at = @At("HEAD"), remap = false)
+    @SuppressWarnings("all")
     private void onUpdate(CallbackInfo ci) {
         if (!(((EntityLiving) (Object) this) instanceof EntityPlayer)) {
             return;
@@ -32,8 +31,8 @@ public abstract class EntityLivingMixin extends Entity {
 
         int blockID = worldObj.getBlockId(blockX, blockY, blockZ);
 
-        boolean isMovingKey = (this.moveForward > 0 || this.moveStrafing > 0);
-        boolean isPathBlock = (blockID == Block.pathDirt.blockID || blockID == Block.cobbleStone.blockID);
+        boolean isMovingKey = (this.moveForward != 0 || this.moveStrafing != 0);
+        boolean isPathBlock = (blockID == Block.pathDirt.blockID || blockID == Block.cobbleStone.blockID || blockID == Block.gravel.blockID);
 
         double MAX_SPEED = 0.2;
         if (isPathBlock && isMovingKey) {

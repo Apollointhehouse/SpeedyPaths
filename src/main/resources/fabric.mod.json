@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "speedypaths",
+  "id": "speedy-paths",
   "version": "${version}",
 
   "name": "Speedy Paths",
-  "description": "Makes legs go brrr on path blocks.",
+  "description": "Makes legs go brrrr on cobblestone and grass paths.",
   "authors": [
     "Apollointhehouse"
   ],
@@ -18,19 +18,19 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      {
-        "adapter": "kotlin",
-        "value": "apollointhehouse.speedyPaths.SpeedyPaths"
-      }
+        {
+          "adapter": "kotlin",
+          "value": "apollointhehouse.speedyPaths.SpeedyPathsKt::init"
+        }
     ]
   },
   "mixins": [
-    "SpeedyPaths.mixins.json"
+    "speedyPaths.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.13.3",
-    "fabric-language-kotlin": ">=1.9.4+kotlin.1.8.21"
+    "fabricloader": ">=0.14.7",
+    "fabric-language-kotlin": "*"
   },
   "suggests": {
   }
