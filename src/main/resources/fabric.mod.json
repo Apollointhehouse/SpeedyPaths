@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Speedy Paths",
-  "description": "Makes legs go brrrr on cobblestone and grass paths.",
+  "description": "A babric mod for BTA 1.7.6.2_02 that makes your legs go brrrr on cobblestone, gravel, and dirt paths.",
   "authors": [
     "Apollointhehouse"
   ],
