@@ -1,13 +1,13 @@
 package apollointhehouse.speedyPaths.mixin;
 
+import kotlin.Pair;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import static java.lang.Math.sqrt;
+import static apollointhehouse.speedyPaths.SpeedRegulatorKt.speedRegulator;
 
 @Mixin(EntityLiving.class)
 public abstract class EntityLivingMixin extends Entity {
@@ -36,22 +36,10 @@ public abstract class EntityLivingMixin extends Entity {
 
         double MAX_SPEED = 0.2;
         if (isPathBlock && isMovingKey) {
-            double targetSpeed = MAX_SPEED * 3;
-
-            double dx = this.motionX;
-            double dz = this.motionZ;
-            double speed = sqrt(dx * dx + dz * dz);
-
-            double diff = targetSpeed - speed;
-            double acceleration = diff / 10;
-
-            this.motionX += acceleration * dx / speed;
-            this.motionZ += acceleration * dz / speed;
-
-            if (speed > MAX_SPEED) {
-                this.motionX = this.motionX * MAX_SPEED / speed;
-                this.motionZ = this.motionZ * MAX_SPEED / speed;
-            }
+            Pair<Double, Double> newMotion = speedRegulator(MAX_SPEED, this.motionX, this.motionZ, isPathBlock, isMovingKey);
+            this.motionX = newMotion.getFirst();
+            this.motionZ = newMotion.getSecond();
         }
+
     }
 }
