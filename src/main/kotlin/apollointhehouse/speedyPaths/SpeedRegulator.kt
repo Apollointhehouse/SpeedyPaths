@@ -4,8 +4,8 @@ import kotlin.math.sqrt
 
 object SpeedRegulator {
     @JvmStatic
-    fun regulateSpeed(maxSpeed: Double, motionX: Double, motionZ: Double, isPathBlock: Boolean, isMovingKey: Boolean): DoubleArray {
-        if (!isPathBlock || !isMovingKey) {
+    fun regulateSpeed(maxSpeed: Double, motionX: Double, motionZ: Double, isPathBlock: Boolean, isMovingKey: Boolean, isSingleplayer: Boolean): DoubleArray {
+        if (!isPathBlock || !isMovingKey || !isSingleplayer) {
             return doubleArrayOf(motionX, motionZ)
         }
 
