@@ -34,10 +34,11 @@ public abstract class EntityLivingMixin extends Entity {
         boolean isMovingKey = (this.moveForward != 0 || this.moveStrafing != 0);
         boolean isPathBlock = (blockID == Block.pathDirt.blockID || blockID == Block.cobbleStone.blockID || blockID == Block.gravel.blockID);
         boolean isSingleplayer = (!(this.worldObj.isMultiplayerAndNotHost));
+        boolean isMoving = ((this.motionX + this.motionZ) != 0);
 
         double MAX_SPEED = 0.2;
 
-        double[] result = apollointhehouse.speedyPaths.SpeedRegulator.regulateSpeed(MAX_SPEED, motionX, motionZ, isPathBlock, isMovingKey, isSingleplayer);
+        double[] result = apollointhehouse.speedyPaths.SpeedRegulator.regulateSpeed(MAX_SPEED, motionX, motionZ, isPathBlock, isMovingKey, isSingleplayer, isMoving);
         this.motionX = result[0];
         this.motionZ = result[1];
     }
