@@ -2,17 +2,16 @@ package apollointhehouse.speedyPaths.mixin;
 
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.src.World;
 
+import static apollointhehouse.speedyPaths.SpeedRegulator.regulateSpeed;
+
 
 @Mixin(EntityLiving.class)
 public abstract class EntityLivingMixin extends Entity {
-    @Shadow(remap = false) protected float moveForward;
-    @Shadow(remap = false) protected float moveStrafing;
 
     public EntityLivingMixin(World world) {
         super(world);
@@ -24,22 +23,6 @@ public abstract class EntityLivingMixin extends Entity {
         if (!(((EntityLiving) (Object) this) instanceof EntityPlayer)) {
             return;
         }
-
-        int blockX = MathHelper.floor_double(this.posX);
-        int blockY = MathHelper.floor_double(this.posY - 1.8);
-        int blockZ = MathHelper.floor_double(this.posZ);
-
-        int blockID = worldObj.getBlockId(blockX, blockY, blockZ);
-
-        boolean isMovingKey = (this.moveForward != 0 || this.moveStrafing != 0);
-        boolean isPathBlock = (blockID == Block.pathDirt.blockID || blockID == Block.cobbleStone.blockID || blockID == Block.gravel.blockID);
-        boolean isSingleplayer = (!(this.worldObj.isMultiplayerAndNotHost));
-        boolean isMoving = ((this.motionX + this.motionZ) != 0);
-
-        double MAX_SPEED = 0.2;
-
-        double[] result = apollointhehouse.speedyPaths.SpeedRegulator.regulateSpeed(MAX_SPEED, motionX, motionZ, isPathBlock, isMovingKey, isSingleplayer, isMoving);
-        this.motionX = result[0];
-        this.motionZ = result[1];
+        regulateSpeed();
     }
 }

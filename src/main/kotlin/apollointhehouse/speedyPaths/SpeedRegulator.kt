@@ -1,29 +1,41 @@
 package apollointhehouse.speedyPaths
 
+import net.minecraft.client.Minecraft
+import net.minecraft.src.Block
+import net.minecraft.src.MathHelper
 import kotlin.math.sqrt
 
 object SpeedRegulator {
     @JvmStatic
-    fun regulateSpeed(maxSpeed: Double, motionX: Double, motionZ: Double, isPathBlock: Boolean, isMovingKey: Boolean, isSingleplayer: Boolean, isMoving: Boolean): DoubleArray {
+    fun regulateSpeed() {
+        val mc = Minecraft.getMinecraft()
+        val player = mc.thePlayer
+        val world = mc.theWorld
+
+        val blockX = MathHelper.floor_double(player.posX)
+        val blockY = MathHelper.floor_double(player.posY - 1.8)
+        val blockZ = MathHelper.floor_double(player.posZ)
+        val blockID: Int = world.getBlockId(blockX, blockY, blockZ)
+
+        val isMovingKey = player.movementInput.moveForward != 0f || player.movementInput.moveStrafe != 0f
+        val isPathBlock = blockID == Block.pathDirt.blockID || blockID == Block.cobbleStone.blockID || blockID == Block.gravel.blockID
+        val isSingleplayer: Boolean = !world.isMultiplayerAndNotHost
+        val isMoving = player.motionX + player.motionZ != 0.0
+        val speed = sqrt(player.motionX * player.motionX + player.motionZ * player.motionZ)
+
         if (!isPathBlock || !isMovingKey || !isSingleplayer || !isMoving) {
-            return doubleArrayOf(motionX, motionZ)
+            return
         }
 
-        val targetSpeed = maxSpeed * 3
-
-        val speed = sqrt(motionX * motionX + motionZ * motionZ)
-
-        val diff = targetSpeed - speed
+        val diff = 0.6 - speed
         val acceleration = diff / 10
 
-        var newMotionX = motionX + acceleration * motionX / speed
-        var newMotionZ = motionZ + acceleration * motionZ / speed
+        player.motionX = player.motionX + acceleration * player.motionX / speed
+        player.motionZ = player.motionZ + acceleration * player.motionZ / speed
 
-        if (speed > maxSpeed) {
-            newMotionX = newMotionX * maxSpeed / speed
-            newMotionZ = newMotionZ * maxSpeed / speed
+        if (speed > 0.6) {
+            player.motionX = player.motionX * 0.6 / speed
+            player.motionZ = player.motionZ * 0.6 / speed
         }
-
-        return doubleArrayOf(newMotionX, newMotionZ)
     }
 }

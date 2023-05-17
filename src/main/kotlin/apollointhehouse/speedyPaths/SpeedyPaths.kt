@@ -9,5 +9,4 @@ val LOGGER: Logger = LoggerFactory.getLogger(MODID)
 @Suppress("unused")
 fun init() {
     LOGGER.info("SpeedyPaths initialized.")
-
 }
